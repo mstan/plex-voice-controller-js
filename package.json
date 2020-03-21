@@ -1,0 +1,24 @@
+{
+  "name": "plex-voice-controller-js",
+  "version": "0.0.1",
+  "description": "Series of voice control first focused Plex commands implemented in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "plex",
+    "javascript",
+    "nodejs",
+    "voice",
+    "controller"
+  ],
+  "author": "Matthew Stanley",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "encodeurl": "^1.0.2",
+    "plex-api": "^5.3.1"
+  }
+}
