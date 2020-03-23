@@ -16,30 +16,34 @@ const PLEX_PARAMETERS = {
 	}
 }
 
-console.log('test');
-console.log(PLEX_PARAMETERS);
-let plexClient = new PlexAPI(PLEX_PARAMETERS);
 
-async function setup(client) {
-	if(!process.env.PLEX_DEFAULT_SERVER_MACHINE_ID) {
-		debug('Warning: No Default Server was set. Consider setting a server below from the following Server IDs in your .env file')
-		let servers = await getServers(client);
+async function setup() {
+	return new Promise( async (resolve,reject) => {
+		let plexClient = await new PlexAPI(PLEX_PARAMETERS);
+		if(!process.env.PLEX_DEFAULT_SERVER_MACHINE_ID) {
+			debug('Warning: No Default Server was set. Consider setting a server below from the following Server IDs in your .env file')
+			let servers = await getServers(plexClient);
 
-		if(!servers || servers.length == 0) {
-			throw new Error("No associated servers were found");
-			process.exit(1);
+			if(!servers || servers.length == 0) {
+				throw new Error("No associated servers were found");
+				process.exit(1);
+			}
+
+			debug('Available servers');
+			for(server in servers) {
+				debug(`[${ servers[server].name }] ${ servers[server].machineIdentifier  }`)
+			}
+			debug(`Defaulting to ${servers[0].name} [${servers[0].machineIdentifier}]`)
+			process.env.PLEX_DEFAULT_SERVER_MACHINE_ID = servers[0].machineIdentifier;
+
+			process.env.PLEX_API_CLIENT = plexClient;
 		}
+		resolve(plexClient);
+	})
+}
 
-		debug('Available servers');
-		for(server in servers) {
-			debug(`[${ servers[server].name }] ${ servers[server].machineIdentifier  }`)
-		}
-		debug(`Defaulting to ${servers[0].name} [${servers[0].machineIdentifier}]`)
-		process.env.PLEX_DEFAULT_SERVER_MACHINE_ID = servers[0].machineIdentifier;
-
-		process.env.PLEX_API_CLIENT = client;
-		return client;
-	}
+async function voiceCommand(client,options) {
+	return await performAction(client, options);
 }
 
 
@@ -67,9 +71,14 @@ performAction(plexClient, options).then((response) => {
 	return { error };	
 })
 */
-setup(plexClient).then((result) => {
-	module.exports = performAction;
+
+/*
+setup().then((result) => {
+	return result
 })
+*/
 
-
-
+module.exports = {
+	setup,
+	voiceCommand
+}

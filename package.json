@@ -1,6 +1,6 @@
 {
   "name": "plex-voice-controller-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Series of voice control first focused Plex commands implemented in JavaScript",
   "main": "index.js",
   "scripts": {
