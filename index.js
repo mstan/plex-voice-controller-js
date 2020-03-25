@@ -1,4 +1,4 @@
-require('dotenv').config(); // environment variable loading from file
+require('dotenv').config();
 let debug = require('debug')('plex-controller:main'); // debug logger
 let PlexAPI = require('plex-api'); // plex API library
 
@@ -73,7 +73,6 @@ let options = {
 	//targetClient: "LG 75SK8070AUB", // OPTIONAL
 	targetMediaName: "tom and jerry",
 	targetMediaType: "show",
-	shuffle: 0, // 
 	action: "shuffle"
 }
 */
