@@ -72,15 +72,15 @@ async function setup() {
 let options = {
 	//targetClient: "LG 75SK8070AUB", // OPTIONAL
 	targetMediaName: "tom and jerry",
-	targetMediaTypes: ["show"],
+	targetMediaType: "show",
 	shuffle: 0, // 
 	action: "shuffle"
 }
 */
 
 // Wrapper function of perform action. Consider adding more unique voiceCommand functionality here.
-async function voiceCommand(client,options) {
-	return await performAction(client, options);
+async function voiceCommand(plexClient,options) {
+	return await performAction(plexClient, options);
 }
 
 module.exports = {
